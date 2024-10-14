@@ -43,7 +43,7 @@ def main():
                 sys.exit("Game over!")
             for shot in shots:
                 if shot.collision_check(obj):
-                    obj.kill()
+                    obj.split()
 
 
         # Display black screen
