@@ -25,6 +25,13 @@ def main():
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
     astroidfield = AsteroidField()
     points = 0
+    points_multiplier = False
+    text_font = pygame.font.SysFont("Times New Roman", 15, bold = True)
+
+    def draw_text(text, font, text_color, x, y):
+        img = font.render(text, True, text_color)
+        screen.blit(img, (x, y))
+
     print("Starting asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
     print(f"Screen height: {SCREEN_HEIGHT}")
@@ -40,15 +47,22 @@ def main():
 
         for obj in asteroids:
             if player.collision_check(obj):
-                sys.exit(f"Game Over! Score: {points}")
+                sys.exit(f"Game Over! Score: {points:,}")
             for shot in shots:
                 if shot.collision_check(obj):
                     obj.split()
                     points += 100
-
+                    if points > 10000:
+                        points += 100
+                    if points > 100000:
+                        points += 300
+                    
         
         # Display black screen
         screen.fill((0, 0, 0))
+        
+        # Display score
+        draw_text(f"Score: {points:,}", text_font, (255, 255, 255), 5, 5)
 
         # Draw objects
         for obj in drawable_group:
