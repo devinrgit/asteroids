@@ -23,11 +23,11 @@ def main():
     clock = pygame.time.Clock()
     dt = 0
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
-    asteroidfield = AsteroidField()
+    astroidfield = AsteroidField()
+    points = 0
     print("Starting asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
     print(f"Screen height: {SCREEN_HEIGHT}")
-
     
     while True:
         for event in pygame.event.get():
@@ -40,12 +40,13 @@ def main():
 
         for obj in asteroids:
             if player.collision_check(obj):
-                sys.exit("Game over!")
+                sys.exit(f"Game Over! Score: {points}")
             for shot in shots:
                 if shot.collision_check(obj):
                     obj.split()
+                    points += 100
 
-
+        
         # Display black screen
         screen.fill((0, 0, 0))
 
